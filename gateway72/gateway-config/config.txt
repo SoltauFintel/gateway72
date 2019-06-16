@@ -1,0 +1,18 @@
+routes:
+
+# alle laden
+GET    /mouse-service/foo   -> mouse->/foo
+POST   /mouse-service/foo   -> mouse->/foo				{USER}
+PUT    /mouse-service/foo/:id -> mouse->/foo/:id		{USER}
+DELETE /mouse-service/foo/:id -> mouse->/foo/:id		{OFFERS_ADMIN}
+
+POST   /mouse-service/admin/foo/:id/bar/:pl/edit   -> mouse->/edit/:id/:pl		{OFFERS_ADMIN}
+
+GET    /ping ->    http://mwvb.de:9032/rest/_info
+
+POST   /do-login ->  mouse -> /do-login   {$LOGIN}
+GET    /do-logout ->  mouse -> /do-logout   {USER,$LOGOUT}
+
+
+services:
+mouse -> http://localhost:6066/rest/mouse

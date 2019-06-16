@@ -1,0 +1,11 @@
+/bin
+/.project
+/.classpath
+/.settings
+
+/build
+/.gradle
+/build.gradle
+/build.xml
+
+/ideen.md

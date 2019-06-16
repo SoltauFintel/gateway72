@@ -1,0 +1,28 @@
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'windows-1252'
+compileTestJava.options.encoding = 'windows-1252'
+
+mainClassName = 'gateway72.Gateway72App'
+
+dependencies {
+    compile 'org.eclipse.jetty:jetty-server:9.4.8.v20171121'
+    compile 'org.eclipse.jetty:jetty-webapp:9.4.8.v20171121'
+    compile 'org.eclipse.jetty:jetty-client:9.4.8.v20171121'
+    compile 'org.eclipse.jetty:jetty-proxy:9.4.8.v20171121'
+    compile 'org.slf4j:slf4j-simple:1.7.25'
+    compile 'org.tinylog:tinylog:1.3.4'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'org.apache.httpcomponents:httpclient:4.5.6'
+    compile 'io.jsonwebtoken:jjwt:0.7.0'
+    compile 'org.mindrot:jbcrypt:0.4'
+    
+    testCompile 'junit:junit:4.12'
+}
+
+repositories {
+	mavenCentral()
+}
