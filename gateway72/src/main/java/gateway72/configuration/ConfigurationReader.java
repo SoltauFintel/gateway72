@@ -32,7 +32,7 @@ public class ConfigurationReader {
 
     private List<File> getFiles(String folder) {
         File dir = new File(folder);
-        if (!dir.isDirectory()) {
+        if (!dir.isDirectory() && !folder.startsWith("/")) {
             dir = new File("/" + folder);
         }
         if (dir.isDirectory()) {
@@ -41,8 +41,10 @@ public class ConfigurationReader {
             throw new RuntimeException("Configuration directory '" + folder + "' not found!");
         }
         List<File> ret = new ArrayList<>();
-        for (File file : dir.listFiles()) {
-            if (!dir.isDirectory()) {
+        String[] files = dir.list();
+        for (String filename : files) {
+            File file = new File(dir, filename);
+            if (!file.isDirectory()) {
                 ret.add(file);
             }
         }
