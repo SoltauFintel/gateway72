@@ -12,7 +12,7 @@ import gateway72.jetty.Server;
  * Simple API Gateway
  */
 public class Gateway72App {
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.1";
     private static Server server;
     
     public static void main(String[] args) {

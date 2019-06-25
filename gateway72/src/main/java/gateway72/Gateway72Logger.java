@@ -1,5 +1,8 @@
 package gateway72;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Gateway72Logger {
     public static Gateway72Logger instance = new Gateway72Logger();
     
@@ -25,10 +28,11 @@ public class Gateway72Logger {
     }
     
     protected void log(boolean success, String msg) {
+        String m = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()) + " [Gateway]  " + msg;
         if (success) {
-            System.out.println("[Gateway]  " + msg);
+            System.out.println(m);
         } else {
-            System.err.println("[Gateway]  " + msg);
+            System.err.println(m);
         }
     }
 
