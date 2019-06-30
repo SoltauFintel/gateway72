@@ -31,7 +31,6 @@ public class JwtAuthTest {
 
     @Test
     public void test() throws Exception {
-        System.setProperty("GATEWAY_JWT_PUBLIC_KEY", Secrets.GATEWAY_JWT_PUBLIC_KEY);
         ExecutorService threadPool = Executors.newFixedThreadPool(2);
         Testserver1.contextPath = "/*";
         threadPool.execute(new Testserver1());

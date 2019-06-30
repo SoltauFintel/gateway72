@@ -2,10 +2,10 @@ package gateway72.auth;
 
 import java.util.ArrayList;
 
-import gateway72.Gateway72Config;
 import gateway72.Gateway72Logger;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.impl.DefaultJwtParser;
 
 public class JwtAuthorization extends AbstractAuthorization {
     private static final String TOKEN_PREFIX = "Bearer ";
@@ -22,10 +22,7 @@ public class JwtAuthorization extends AbstractAuthorization {
         }
         String token = authorization.replace(TOKEN_PREFIX, "");
         try {
-            Claims claims = Jwts.parser()
-                    .setSigningKey(Gateway72Config.getJwtPublicSigningKey())
-                    .parseClaimsJws(token)
-                    .getBody();
+            Claims claims = getClaimsFromToken(token);
             userId = claims.getSubject();
             if (userId != null && !userId.trim().isEmpty()) {
                 Object scopes = claims.get("scopes"); // roles
@@ -46,5 +43,12 @@ public class JwtAuthorization extends AbstractAuthorization {
         } catch (Exception e) {
             throw new StatusException(401, e);
         }
+    }
+    
+    private static Claims getClaimsFromToken(String token) {
+        String[] w = token.split("\\.");
+        String unsignedToken = w[0] + "." + w[1] + ".";
+        Jwt<?, ?> jwt = (Jwt<?, ?>) new DefaultJwtParser().parse(unsignedToken);
+        return (Claims) jwt.getBody();
     }
 }

@@ -35,13 +35,4 @@ public class Gateway72Config {
         }
         return contextPath;
     }
-
-    public static String getJwtPublicSigningKey() {
-        final String name = "GATEWAY_JWT_PUBLIC_KEY";
-        String ret = System.getProperty(name, System.getenv(name));
-        if (ret == null || ret.trim().isEmpty()) {
-            throw new RuntimeException("Please set env var " + name);
-        }
-        return ret;
-    }
 }
