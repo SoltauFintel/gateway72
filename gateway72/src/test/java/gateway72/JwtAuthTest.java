@@ -72,17 +72,18 @@ public class JwtAuthTest {
             if (e.getMessage().contains("Bad credentials")) {
                 // hmm, es gibt den User nicht. Das passiert mglw. wenn userdata die Daten verloren hat. Dann leg ich den User halt an... :-)
                 try {
-                    System.out.println(Secrets.JWT_REGISTER_URL);
+                    System.out.println(Secrets.JWT_REGISTER_URL); // XXX debug
                     System.out.println("entity (media type: application/json):");
                     System.out.println(new Gson().toJson(login));
-                    System.out.println("register response: " + client.post(Secrets.JWT_REGISTER_URL, new Gson().toJson(login), "application/json"));
+                    String response = client.post(Secrets.JWT_REGISTER_URL, new Gson().toJson(login), "application/json");
+                    System.out.println("register response: " + response);
                 } catch (Exception ee) {
-                    throw new RuntimeException("Fehler beim Registrieren: " + ee.getMessage(), ee);
+                    throw new RuntimeException("Register error: " + ee.getMessage(), ee);
                 }
                 try {
                     return doLogin(login);
                 } catch (Exception eee) {
-                    throw new RuntimeException("Fehler beim Login nach Registrierung: " + eee.getMessage(), eee);
+                    throw new RuntimeException("Login error after register: " + eee.getMessage(), eee);
                 }
             } else {
                 throw new RuntimeException(e);
