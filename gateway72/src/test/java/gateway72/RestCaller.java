@@ -45,7 +45,7 @@ public class RestCaller {
         // Error handling
         final int status = response.getStatusLine().getStatusCode();
         if (status != 200) {
-            throw new RuntimeException("Status " + status);
+            throw new RuntimeException("Status " + status + ". " + EntityUtils.toString(response.getEntity()));
         }
         // Return response as String or JSON.
         return EntityUtils.toString(response.getEntity());
