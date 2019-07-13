@@ -5,6 +5,7 @@ import gateway72.configuration.Configuration;
 import gateway72.configuration.ConfigurationReader;
 import gateway72.configuration.ConfigurationService;
 import gateway72.configuration.RoutingService;
+import gateway72.jetty.CORS;
 import gateway72.jetty.GatewayErrorHandler;
 import gateway72.jetty.Server;
 
@@ -12,7 +13,7 @@ import gateway72.jetty.Server;
  * Simple API Gateway
  */
 public class Gateway72App {
-    public static final String VERSION = "1.0.3";
+    public static final String VERSION = "1.1.0";
     private static Server server;
     
     public static void main(String[] args) {
@@ -38,9 +39,10 @@ public class Gateway72App {
         String contextPath = Gateway72Config.getContextPath();
         Gateway72Logger.instance.boot("Server context path: '" + contextPath + "'");
         
+        CORS cors = new CORS(Gateway72Config.isCors());
         server = new Server(port, contextPath);
-        server.addServlet(new Gateway72Servlet(new RoutingService(configuration), new AuthorizationService()));
-        server.setErrorHandler(new GatewayErrorHandler());
+        server.addServlet(new Gateway72Servlet(new RoutingService(configuration), new AuthorizationService(), cors));
+        server.setErrorHandler(new GatewayErrorHandler(cors));
         server.start();
     }
 }

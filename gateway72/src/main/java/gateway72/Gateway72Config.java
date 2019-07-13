@@ -35,4 +35,8 @@ public class Gateway72Config {
         }
         return contextPath;
     }
+    
+    public static boolean isCors() {
+        return !"0".equals(System.getenv("GATEWAY_CORS"));
+    }
 }
