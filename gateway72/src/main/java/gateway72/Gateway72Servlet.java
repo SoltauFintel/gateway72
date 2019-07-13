@@ -10,7 +10,6 @@ import gateway72.auth.StatusException;
 import gateway72.configuration.Route;
 import gateway72.configuration.RoutingService;
 import gateway72.cookie.CookieAuthorization;
-import gateway72.jetty.CORS;
 import gateway72.jetty.ProxyServletBase;
 
 /**
@@ -21,8 +20,7 @@ public class Gateway72Servlet extends ProxyServletBase {
     private final RoutingService routingService;
     private final AuthorizationService authorizationService;
 
-    public Gateway72Servlet(RoutingService routingService, AuthorizationService authorizationService, CORS cors) {
-        super(cors);
+    public Gateway72Servlet(RoutingService routingService, AuthorizationService authorizationService) {
         this.routingService = routingService;
         this.authorizationService = authorizationService;
     }

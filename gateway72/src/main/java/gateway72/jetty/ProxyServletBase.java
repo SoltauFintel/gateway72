@@ -1,8 +1,5 @@
 package gateway72.jetty;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,18 +11,6 @@ import org.eclipse.jetty.util.Callback;
  * Keep away Jetty-specific classes from Gateway72Servlet
  */
 public abstract class ProxyServletBase extends ProxyServlet {
-    private final CORS cors;
-    
-    public ProxyServletBase(CORS cors) {
-        this.cors = cors;
-    }
-    
-    @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        super.service(request, response);
-        cors.handle(response);
-    }
     
     @Override
     protected final void onResponseContent(HttpServletRequest request, HttpServletResponse response, Response proxyResponse,
