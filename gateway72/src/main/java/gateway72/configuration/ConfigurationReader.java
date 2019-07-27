@@ -53,7 +53,7 @@ public class ConfigurationReader {
 
     public Configuration parse(String text) {
         Configuration model = new Configuration();
-        int mode = 1; // 1=routes, 2=services
+        int mode = 1; // 1=routes, 2=services, 3=doc
         for (String line: text.replace("\r", "").split("\n")) {
             try {
                 String lt = line.trim();
@@ -62,10 +62,14 @@ public class ConfigurationReader {
                     mode = 1;
                 } else if ("services:".equals(lt)) {
                     mode = 2;
+                } else if ("doc:".equals(lt)) {
+                    mode = 3;
                 } else if (mode == 1) {
                     parseRouteLine(lt, model);
                 } else if (mode == 2) {
                     parseServiceLine(lt, model);
+                } else if (mode == 3) {
+                    parseDocLine(lt, model);
                 } else {
                     throw new ConfigurationFileWarning("wrong mode? cannot parse line: " + lt);
                 }
@@ -140,6 +144,26 @@ public class ConfigurationReader {
         service.setName(name);
         service.setUrl(url);
         model.getServices().add(service);
+    }
+
+    private void parseDocLine(String lt, Configuration model) throws ConfigurationFileWarning {
+        int o = lt.indexOf("->");
+        if (o < 0) {
+            throw new ConfigurationFileWarning("arrow missing. cannot parse line: " + lt);
+        }
+        String name = lt.substring(0, o).trim();
+        String url = lt.substring(o + "->".length()).trim();
+        boolean found = false;
+        for (Service sv : model.getServices()) {
+            if (sv.getName().equals(name)) {
+                sv.setDoc(url);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.err.println("Configuration error: doc section must be after services section."
+                    + " doc URL for service '" + name + "' cannot be assigned to service.");
+        }
     }
 
     private String loadFile(File file) {

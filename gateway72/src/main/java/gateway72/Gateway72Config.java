@@ -35,4 +35,10 @@ public class Gateway72Config {
         }
         return contextPath;
     }
+
+    public static boolean withDocumentation() {
+        final String name = "GATEWAY_DOC";
+        String v = System.getProperty(name, System.getenv(name));
+        return !"0".equals(v);
+    }
 }

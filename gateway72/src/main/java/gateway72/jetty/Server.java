@@ -17,7 +17,11 @@ public class Server {
     }
 
     public void addServlet(HttpServlet servlet) {
-        context.addServlet(new ServletHolder(servlet), "/*");
+        addServlet(servlet, "/*");
+    }
+
+    public void addServlet(HttpServlet servlet, String path) {
+        context.addServlet(new ServletHolder(servlet), path);
     }
     
     public void setErrorHandler(ErrorHandler errorHandler) {

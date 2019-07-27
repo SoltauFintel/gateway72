@@ -4,7 +4,8 @@ public class Service {
     private String name;
     // usually no '/' at end
     private String url;
-
+    private String doc;
+    
     public String getName() {
         return name;
     }
@@ -19,5 +20,13 @@ public class Service {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getDoc() {
+        return doc;
+    }
+
+    public void setDoc(String doc) {
+        this.doc = doc;
     }
 }

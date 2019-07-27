@@ -5,6 +5,7 @@ import gateway72.configuration.Configuration;
 import gateway72.configuration.ConfigurationReader;
 import gateway72.configuration.ConfigurationService;
 import gateway72.configuration.RoutingService;
+import gateway72.doc.DocServlet;
 import gateway72.jetty.GatewayErrorHandler;
 import gateway72.jetty.Server;
 
@@ -12,7 +13,7 @@ import gateway72.jetty.Server;
  * Simple API Gateway
  */
 public class Gateway72App {
-    public static final String VERSION = "1.0.4";
+    public static final String VERSION = "1.1.0";
     private static Server server;
     
     public static void main(String[] args) {
@@ -40,6 +41,10 @@ public class Gateway72App {
         
         server = new Server(port, contextPath);
         server.addServlet(new Gateway72Servlet(new RoutingService(configuration), new AuthorizationService()));
+        if (Gateway72Config.withDocumentation()) {
+            server.addServlet(new DocServlet(contextPath, configuration), "/doc/*");
+            Gateway72Logger.instance.boot("with documentation");
+        }
         server.setErrorHandler(new GatewayErrorHandler());
         server.start();
     }
