@@ -5,7 +5,7 @@ package gateway72.configuration;
  */
 public enum Verb {
     
-    GET, POST, PUT, DELETE;
+    GET, POST, PUT, DELETE, PATCH;
     
     public static Verb fromString(String str) {
         if ("GET".equalsIgnoreCase(str)) {
@@ -16,6 +16,8 @@ public enum Verb {
             return PUT;
         } else if ("DELETE".equalsIgnoreCase(str)) {
             return DELETE;
+        } else if ("PATCH".equalsIgnoreCase(str)) {
+            return PATCH;
         } else {
             throw new RuntimeException("Unsupported verb: '" + str + "'");
         }

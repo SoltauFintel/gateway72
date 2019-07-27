@@ -50,6 +50,14 @@ public class RoutingServiceTest {
     }
 
     @Test
+    public void patch() {
+        String config = "PATCH /abc -> http://localhost:6066/def";
+        RoutingService sv = new RoutingService(new ConfigurationReader().parse(config));
+        
+        Assert.assertEquals("http://localhost:6066/def", buildURL("PATCH", "/abc", sv));
+    }
+
+    @Test
     public void delete() {
         String config = "DELETE /abc -> http://localhost:6066/def/g";
         RoutingService sv = new RoutingService(new ConfigurationReader().parse(config));
